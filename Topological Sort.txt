@@ -1,0 +1,41 @@
+class Solution {
+     static ArrayList<Integer> topologicalSort(ArrayList<ArrayList<Integer>> adj) {
+         int[] ind=new int[adj.size()];
+         LinkedList<Integer>que=new LinkedList<>();
+         ArrayList<Integer> ans=new ArrayList<>();
+         for(int i=0;i<adj.size();i++)
+         {
+             for(int nbr:adj.get(i))
+             {
+                 ind[nbr]+=1;
+             }
+         }
+         for(int i=0;i<ind.length;i++)
+         {
+             if(ind[i]==0)
+             {
+                 que.add(i);
+                 ans.add(i);
+             }
+         }
+         while(que.size()!=0)
+         {
+             int size=que.size();
+             while(size>0)
+             {
+                 int rm=que.remove();
+                 for(int nbr:adj.get(rm))
+                 {
+                     ind[nbr]--;
+                     if(ind[nbr]==0)
+                     {
+                         que.add(nbr);
+                         ans.add(nbr);
+                     }
+                 }
+                 size--;
+             }
+         }
+         return ans;
+    }
+}
